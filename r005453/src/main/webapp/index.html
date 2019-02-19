@@ -1,0 +1,126 @@
+<!doctype html>
+<html ng-app="CityApp">
+<head>
+<title>Work Assignment R005453</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="app/app.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+</head>
+<body>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div ng-controller="CityController">
+				<div class="table-responsive col-md-6">
+					<table class="table table-striped">
+						<tr>
+							<th>City Name</th>
+							<th>Lat</th>
+							<th>Lng</th>
+							<th>Country Name</th>
+							<th>Population</th>
+							<th></th>
+						</tr>
+						<tr ng-repeat="store in city track by $index">
+							<td>{{store.name}}</td>
+							<td>{{store.lat}}</td>
+							<td>{{store.lng}}</td>
+							<td>{{store.countryName}}</td>
+							<td>{{store.population}}</td>
+						</tr>
+					</table>
+				</div>
+				<form class="col-md-4" ng-submit="search()">
+					<div class="form-group">
+						<label for="cityName">City Name</label> <input id=pac-input
+							type="text" ng-model="searchText" class="controls" id="cityName"
+							placeholder="Search">
+					</div>
+				</form>
+			</div>
+
+			<div id="map" style="width: 500px; height: 400px"></div>
+			<script>
+				function initMap() {
+					var map = new google.maps.Map(document
+							.getElementById('map'), {
+						center : {
+							lat : 41.01384,
+							lng : 28.94966
+						},
+						zoom : 9,
+						mapTypeId : 'roadmap'
+					});
+
+					var input = document.getElementById('pac-input');
+					var searchBox = new google.maps.places.SearchBox(input);
+
+					map.addListener('bounds_changed', function() {
+						searchBox.setBounds(map.getBounds());
+					});
+
+					var markers = [];
+					searchBox
+							.addListener(
+									'places_changed',
+									function() {
+										var places = searchBox.getPlaces();
+
+										if (places.length == 0) {
+											return;
+										}
+
+										markers.forEach(function(marker) {
+											marker.setMap(null);
+										});
+										markers = [];
+
+										var bounds = new google.maps.LatLngBounds();
+										places
+												.forEach(function(place) {
+													if (!place.geometry) {
+														console
+																.log("Returned place contains no geometry");
+														return;
+													}
+													var icon = {
+														url : place.icon,
+														size : new google.maps.Size(
+																71, 71),
+														origin : new google.maps.Point(
+																0, 0),
+														anchor : new google.maps.Point(
+																17, 34),
+														scaledSize : new google.maps.Size(
+																25, 25)
+													};
+
+													markers
+															.push(new google.maps.Marker(
+																	{
+																		map : map,
+																		icon : icon,
+																		title : place.name,
+																		position : place.geometry.location
+																	}));
+
+													if (place.geometry.viewport) {
+														bounds
+																.union(place.geometry.viewport);
+													} else {
+														bounds
+																.extend(place.geometry.location);
+													}
+												});
+										map.fitBounds(bounds);
+									});
+				}
+			</script>
+			<script
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWsLMfK9C80NGz94zO-QQKgZ3Zoe2uccs&libraries=places&callback=initMap"
+				async defer></script>
+</body>
+</html>
