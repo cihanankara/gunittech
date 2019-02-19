@@ -19,6 +19,10 @@ http://localhost:8080/r005453/rest/city/getcityXML/{name}
 
 Home Page
 
-http://localhost:8080/r005453/index.html
+http://localhost:8080/r005453/index.
+
+Sample App on Azure
+
+https://r005453wa.azurewebsites.net/index.html
 
 
