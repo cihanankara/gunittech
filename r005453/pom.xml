@@ -38,42 +38,18 @@
 	</dependencies>
 	<build>
 		<finalName>r005453</finalName>
-		    <plugins>
-       <plugin>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>2.2</version>
-            <configuration>
-                <path>/r005453</path>
-                <port>8080</port>
-            </configuration>
-            <dependencies>
-            </dependencies>
-        </plugin>
-			    		<plugin>
- <groupId>com.microsoft.azure</groupId>
- <artifactId>azure-webapp-maven-plugin</artifactId>
- <version>1.4.0</version>
- <configuration>
-   <deploymentType>jar</deploymentType>
-
-   <!-- configure app to run on port 80, required by App Service -->
-   <appSettings>
-     <property> 
-       <name>JAVA_OPTS</name> 
-       <value>-Dserver.port=80</value> 
-     </property> 
-   </appSettings>
-
-   <!-- Web App information -->
-   <resourceGroup>TestResource</resourceGroup>
-   <appName>r005453</appName>
-   <region>westus</region>  
-
-   <!-- Java Runtime Stack for Web App on Linux-->
-   <linuxRuntime>jre8</linuxRuntime>
- </configuration>
-</plugin>
-    </plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<path>/r005453</path>
+					<port>8080</port>
+				</configuration>
+				<dependencies>
+				</dependencies>
+			</plugin>
+		</plugins>
 	</build>
 </project>

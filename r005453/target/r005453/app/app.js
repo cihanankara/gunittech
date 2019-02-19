@@ -9,7 +9,7 @@ angular
 					$scope.search = function fetch() {
 						$http
 								.get(
-										"http://localhost:8080/city/getcityJSON/"
+										"http://localhost:8080/r005453/rest/city/getcityJSON/"
 												+ $scope.searchText)
 								.then(
 										function(response) {
